@@ -11,35 +11,30 @@
       "32": "icon-32.png"
     }
   },
-  "chrome_url_overrides": {
-    "newtab": "src/pages/newtab/index.html"
-  },
   "icons": {
     "128": "icon-128.png"
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*",
-        "<all_urls>"
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
       ],
       "js": [
-        "src/pages/content/index.tsx"
+        "src/pages/content/chatgpt/index.ts"
       ],
       "css": [
-        "contentStyle.css"
+        "src/pages/content/chatgpt/style.css"
       ]
     }
   ],
-  "devtools_page": "src/pages/devtools/index.html",
   "web_accessible_resources": [
     {
       "resources": [
-        "contentStyle.css",
         "icon-128.png",
         "icon-32.png"
       ],

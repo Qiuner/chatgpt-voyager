@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
 import type { PluginOption } from 'vite';
 
 // plugin to remove dev icons from prod build
@@ -50,6 +50,69 @@ export function crxI18n (options: { localize: boolean, src: string }): PluginOpt
             })
             file.id = refId
         })
+      }
+    }
+  }
+}
+
+export function mirrorContentStyleCss(options: { from: string; to: string }): PluginOption {
+  return {
+    name: 'mirror-content-style-css',
+    apply: 'build',
+    writeBundle(outputOptions) {
+      const outDir = outputOptions.dir
+      if (!outDir) return
+      const manifestAbs = resolve(outDir, 'manifest.json')
+      if (!fs.existsSync(manifestAbs)) return
+
+      let manifest: any
+      try {
+        manifest = JSON.parse(fs.readFileSync(manifestAbs, 'utf8'))
+      } catch {
+        return
+      }
+
+      const contentScripts = Array.isArray(manifest?.content_scripts) ? manifest.content_scripts : []
+      if (contentScripts.length === 0) return
+
+      const targetCssRel = options.to
+
+      let sourceCssRel: string | null = null
+      for (const cs of contentScripts) {
+        const cssList = Array.isArray(cs?.css) ? cs.css : []
+        const hasTarget = cssList.includes(targetCssRel)
+        if (!hasTarget) continue
+        const assetCss = cssList.find((p: any) => typeof p === 'string' && p.startsWith('assets/') && p.endsWith('.css'))
+        if (assetCss) {
+          sourceCssRel = assetCss
+          cs.css = [targetCssRel]
+        } else {
+          cs.css = [targetCssRel]
+        }
+      }
+
+      if (sourceCssRel) {
+        const fromAbs = resolve(outDir, sourceCssRel)
+        const toAbs = resolve(outDir, targetCssRel)
+
+        if (fs.existsSync(fromAbs)) {
+          try {
+            fs.mkdirSync(dirname(toAbs), { recursive: true })
+          } catch {
+            // noop
+          }
+          try {
+            fs.copyFileSync(fromAbs, toAbs)
+          } catch {
+            // noop
+          }
+        }
+      }
+
+      try {
+        fs.writeFileSync(manifestAbs, JSON.stringify(manifest, null, 2))
+      } catch {
+        // noop
       }
     }
   }
