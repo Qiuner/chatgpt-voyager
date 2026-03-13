@@ -1,3 +1,6 @@
+<div align="center">
+<img src="public/icon-128.png" width="96" alt="chatgpt-voyager logo" />
+
 # chatgpt-voyager
 
 ChatGPT 的浏览器扩展增强插件：在对话页面提供时间轴导航，帮助你在长对话里更快定位与回看关键消息。
