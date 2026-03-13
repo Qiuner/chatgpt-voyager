@@ -6,6 +6,7 @@
 
 import './style.css';
 import { TimelineManager } from './timeline/TimelineManager';
+import { initChatGPTExport } from './export';
 import {
   TIMELINE_BAR_SELECTOR,
   TIMELINE_LEFT_SLIDER_SELECTOR,
@@ -26,6 +27,7 @@ if (window.__chatgptTimelineInjected) {
   window.__chatgptTimelineInjected = true;
 
   let timelineManagerInstance: TimelineManager | null = null;
+  let exportController: { destroy: () => void } | null = null;
   let currentUrl = location.href;
   let initTimerId: number | null = null;
   let pageObserver: MutationObserver | null = null;
@@ -135,6 +137,16 @@ if (window.__chatgptTimelineInjected) {
         // noop
       }
     });
+
+    if (exportController) {
+      try {
+        exportController.destroy();
+      } catch {
+        // noop
+      }
+      exportController = null;
+    }
+    exportController = initChatGPTExport();
   };
 
   const ensureInitialObserver = () => {
@@ -196,6 +208,14 @@ if (window.__chatgptTimelineInjected) {
       }
       timelineManagerInstance = null;
     }
+    if (exportController) {
+      try {
+        exportController.destroy();
+      } catch {
+        // noop
+      }
+      exportController = null;
+    }
     removeInjectedUI();
     cleanupGlobalObservers();
   }
@@ -212,6 +232,14 @@ if (window.__chatgptTimelineInjected) {
           // noop
         }
         timelineManagerInstance = null;
+      }
+      if (exportController) {
+        try {
+          exportController.destroy();
+        } catch {
+          // noop
+        }
+        exportController = null;
       }
       removeInjectedUI();
       cleanupGlobalObservers();
