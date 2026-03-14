@@ -17,6 +17,7 @@
   },
   "type": "module",
   "dependencies": {
+    "jszip": "^3.10.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "webextension-polyfill": "^0.12.0"
