@@ -8,9 +8,9 @@
  */
 
 // --- dom.ts ---
-export const TURN_ARTICLE_SELECTOR = 'article[data-turn-id]';
-export const USER_TURN_ARTICLE_SELECTOR = 'article[data-turn="user"]';
-export const USER_TURN_ARTICLE_WITH_ID_SELECTOR = 'article[data-turn="user"][data-turn-id]';
+export const TURN_ARTICLE_SELECTOR = 'section[data-turn-id]';
+export const USER_TURN_ARTICLE_SELECTOR = 'section[data-turn="user"]';
+export const USER_TURN_ARTICLE_WITH_ID_SELECTOR = 'section[data-turn="user"][data-turn-id]';
 
 export const TIMELINE_BAR_SELECTOR = '.chatgpt-timeline-bar';
 export const TIMELINE_LEFT_SLIDER_SELECTOR = '.timeline-left-slider';

@@ -17,6 +17,8 @@ import {
 } from './core';
 import type { Marker, TimelineUI, VisibleRange } from './types';
 
+const VOYAGER_TIMELINE_SELECTOR = '[data-chatgpt-voyager-timeline]';
+
 // --- ui/createTimelineUI.ts ---
 export type TimelineMeasure = {
   measureEl: HTMLDivElement;
@@ -25,11 +27,14 @@ export type TimelineMeasure = {
 };
 
 export const createTimelineUI = (): { ui: TimelineUI; measure: TimelineMeasure } => {
-  let timelineBar = document.querySelector(TIMELINE_BAR_SELECTOR) as HTMLDivElement | null;
+  let timelineBar = document.querySelector(VOYAGER_TIMELINE_SELECTOR) as HTMLDivElement | null;
   if (!timelineBar) {
     timelineBar = document.createElement('div');
     timelineBar.className = 'chatgpt-timeline-bar';
+    timelineBar.setAttribute('data-chatgpt-voyager-timeline', '1');
     document.body.appendChild(timelineBar);
+  } else {
+    timelineBar.setAttribute('data-chatgpt-voyager-timeline', '1');
   }
 
   let track = timelineBar.querySelector('.timeline-track') as HTMLDivElement | null;
@@ -125,6 +130,9 @@ export const createTimelineUI = (): { ui: TimelineUI; measure: TimelineMeasure }
 
 // --- ui/removeTimelineUI.ts ---
 export const removeTimelineUI = () => {
+  try {
+    document.querySelectorAll(VOYAGER_TIMELINE_SELECTOR).forEach((el) => el.remove());
+  } catch {}
   try {
     document.querySelector(TIMELINE_BAR_SELECTOR)?.remove();
   } catch {}

@@ -369,7 +369,7 @@ export class TimelineManager {
 
       const targetId = String(dot.dataset.targetTurnId || '');
       const targetElement = this.conversationContainer?.querySelector(
-        `article[data-turn-id="${targetId}"]`,
+        `section[data-turn-id="${targetId}"]`,
       ) as HTMLElement | null;
       if (targetElement) this.smoothScrollTo(targetElement);
     };

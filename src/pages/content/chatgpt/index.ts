@@ -8,7 +8,6 @@ import './style.css';
 import { TimelineManager } from './timeline/TimelineManager';
 import { initChatGPTExport } from './export';
 import {
-  TIMELINE_BAR_SELECTOR,
   TIMELINE_LEFT_SLIDER_SELECTOR,
   TIMELINE_TOOLTIP_ID,
   TURN_ARTICLE_SELECTOR,
@@ -36,6 +35,9 @@ if (window.__chatgptTimelineInjected) {
   let timelineEnabled = true;
   let unsubscribeEnabled: (() => void) | null = null;
   let initialObserver: MutationObserver | null = null;
+  let isInitializing = false;
+
+  const VOYAGER_TIMELINE_SELECTOR = '[data-chatgpt-voyager-timeline]';
 
   const isConversationRoute = (pathname: string = location.pathname) => {
     const segs = pathname.split('/').filter(Boolean);
@@ -47,7 +49,12 @@ if (window.__chatgptTimelineInjected) {
 
   const removeInjectedUI = () => {
     try {
-      document.querySelector(TIMELINE_BAR_SELECTOR)?.remove();
+      document.querySelectorAll(VOYAGER_TIMELINE_SELECTOR).forEach((el) => el.remove());
+    } catch {
+      // noop
+    }
+    try {
+      document.querySelector('.chatgpt-timeline-bar')?.remove();
     } catch {
       // noop
     }
@@ -118,35 +125,41 @@ if (window.__chatgptTimelineInjected) {
   const shouldRunOnThisRoute = () => timelineEnabled && isConversationRoute();
 
   const initializeTimeline = () => {
-    if (timelineManagerInstance) {
-      try {
-        timelineManagerInstance.destroy();
-      } catch {
-        // noop
+    if (isInitializing) return;
+    isInitializing = true;
+    try {
+      if (timelineManagerInstance) {
+        try {
+          timelineManagerInstance.destroy();
+        } catch {
+          // noop
+        }
+        timelineManagerInstance = null;
       }
-      timelineManagerInstance = null;
+
+      removeInjectedUI();
+
+      timelineManagerInstance = new TimelineManager();
+      void timelineManagerInstance.init().catch((err: any) => {
+        try {
+          console.error('Timeline initialization failed:', err);
+        } catch {
+          // noop
+        }
+      });
+
+      if (exportController) {
+        try {
+          exportController.destroy();
+        } catch {
+          // noop
+        }
+        exportController = null;
+      }
+      exportController = initChatGPTExport();
+    } finally {
+      isInitializing = false;
     }
-
-    removeInjectedUI();
-
-    timelineManagerInstance = new TimelineManager();
-    void timelineManagerInstance.init().catch((err: any) => {
-      try {
-        console.error('Timeline initialization failed:', err);
-      } catch {
-        // noop
-      }
-    });
-
-    if (exportController) {
-      try {
-        exportController.destroy();
-      } catch {
-        // noop
-      }
-      exportController = null;
-    }
-    exportController = initChatGPTExport();
   };
 
   const ensureInitialObserver = () => {
