@@ -1,90 +1,97 @@
 <div align="center">
 <img src="public/icon-128.png" width="96" alt="chatgpt-voyager logo" />
 
-# chatgpt-voyager
+# ChatGPT-Voyager
 
-ChatGPT 的浏览器扩展增强插件：在对话页面提供时间轴导航，帮助你在长对话里更快定位与回看关键消息。
+### ChatGPT 的“缺失增强包”
 
-[![Chrome](https://img.shields.io/badge/Chrome-MV3-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/)
-![License](https://img.shields.io/badge/License-MIT-3DA639?style=flat-square)
-![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=0B1220)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)
+在 ChatGPT 的长对话中，用时间轴快速定位消息；并支持导出对话（Markdown / JSON / 含图片的 ZIP）。
 
-## 功能列表
+[![Chrome](https://img.shields.io/badge/Chrome-MV3-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](#-installation)
+[![Edge](https://img.shields.io/badge/Edge-MV3-0078D7?style=flat-square&logo=microsoftedge&logoColor=white)](#-installation)
+[![License: MIT](https://img.shields.io/badge/License-MIT-3DA639?style=flat-square)](LICENSE)
+[![Built with React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=0B1220)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
-- 🧭 ChatGPT 对话时间轴导航  
-  在 `https://chatgpt.com/*` 与 `https://chat.openai.com/*` 的对话页自动注入一条时间轴。  
-  通过 markers + 虚拟化渲染（仅渲染可见 dots）降低长对话的 DOM 压力，并在滚动时同步高亮当前 active turn。
+[English](.github/README.md) · [中文](#)
 
-- 🪟 Tooltip 摘要预览  
-  Hover / Focus 时间轴 dot 时显示 tooltip，内容来自对应 turn 的文本摘要。  
-  Tooltip 支持三行截断与动态宽度/左右侧放置，窗口 resize 时会重新计算位置与尺寸。
+</div>
 
-- 🎚️ 左侧快速滑块（Slider）  
-  当对话足够长导致时间轴内容高度超过视窗时显示外置 slider，便于快速拖拽定位时间轴位置。  
-  拖拽只影响时间轴 track 的滚动，并通过同步逻辑更新可见 dots 与 active 计算。
+---
 
-- ⭐ 星标关键消息（localStorage）  
-  支持对 dot 长按切换星标状态，将重要 turn “钉住”便于回看。  
-  星标以 `localStorage` 按 conversationId 存储，并通过 `storage` 事件实现跨 tab 同步。
+> 长对话最痛的不是内容多，而是“找不到你刚刚看到的那条”。  
+> ChatGPT-Voyager 的目标是把定位、预览、导出做得更顺手。
 
-- ⚙️ 运行开关（chrome.storage.local）  
-  content script 会读取 `chrome.storage.local` 中的 `timelineActive` 与 `timelineProviders.chatgpt` 作为启用开关。  
-  当前仓库提供了底层开关读取/订阅封装，方便后续在 Popup / Options 接入 UI 控制。
+## ✨ Features
 
-## 安装方式
+### 📍 Timeline Navigation（时间轴导航）
 
-### 手动安装（Chrome）
+**长对话不迷路。**  
+在 `https://chatgpt.com/*` 与 `https://chat.openai.com/*` 的对话页注入时间轴，支持点击跳转与滚动同步高亮当前 active turn。
 
-1. 构建产物：
+- **Virtualized dots**：仅渲染可见范围的 dots，降低长对话 DOM 压力
+- **Hover / Focus preview**：支持 tooltip 摘要预览
+- **Slider**：对话很长时出现外置滑块，便于快速定位
+- **Stars**：长按 dot 切换星标，localStorage 持久化并跨 tab 同步
+
+### 💾 Chat Export（对话导出）
+
+**你的数据，你来保存。**  
+在 ChatGPT 顶部 header（分享按钮左侧）注入“导出”按钮，可导出：
+
+- **Markdown**
+- **JSON**
+- **Images in ZIP**：当对话包含 AI 生成图片时，自动打包为 ZIP（`conversation.* + images/`）
+
+## 📥 Installation
+
+### Manual Installation (Development)
+
+1. 安装依赖
+
+```bash
+npm i --legacy-peer-deps
+```
+
+2. 构建扩展
 
 ```bash
 npm run build:chrome
 ```
 
-2. 打开 `chrome://extensions`
-3. 打开右上角 `Developer mode`
-4. 点击 `Load unpacked`
-5. 选择本项目的 `dist_chrome` 目录
+3. 在 Chrome / Edge 加载
 
-### Chrome Web Store
+- Chrome：打开 `chrome://extensions`
+- Edge：打开 `edge://extensions`
+- 开启 **Developer mode**
+- 点击 **Load unpacked**
+- 选择本项目 `dist_chrome/` 目录
+
+### Chrome Web Store / Edge Add-ons
 
 `TBD`
 
-## 开发指南
+---
 
-### Clone
-
-```bash
-git clone <your-repo-url>
-cd chatgpt-voyager
-```
-
-### Install
+## 🛠️ Development
 
 ```bash
-npm i
-```
-
-### Dev
-
-```bash
+# Start development mode with auto-rebuild
 npm run dev:chrome
+
+# After each rebuild:
+# 1. Open chrome://extensions or edge://extensions
+# 2. Click the refresh button on ChatGPT-Voyager
+# 3. Refresh the ChatGPT page
 ```
 
-开发模式会监听源码变更并更新 `dist_chrome`，在 `chrome://extensions` 中点击扩展卡片上的刷新按钮即可加载最新版本。
-
-### Build
-
-```bash
-npm run build:chrome
-```
-
-## 项目结构
+### Project Structure
 
 ```text
 public/
+  icon-16.png
   icon-32.png
+  icon-48.png
   icon-128.png
 src/
   assets/
@@ -96,32 +103,38 @@ src/
 manifest.json
 ```
 
-- `src/pages/content/chatgpt/`：ChatGPT 对话页 content script（入口、样式、timeline 模块）
-- `src/pages/popup/`：扩展 Popup 页面（当前为基础骨架）
-- `src/pages/options/`：扩展 Options 页面（当前为基础骨架）
+- `src/pages/content/chatgpt/`：ChatGPT 页面 content script（时间轴、导出功能）
+- `src/pages/popup/`：扩展 Popup（当前为基础骨架）
+- `src/pages/options/`：扩展 Options（当前为基础骨架）
 - `manifest.json`：Manifest V3 配置（matches、注入脚本与权限）
 
-## 技术栈
+### Tech Stack
 
-- React 19
-- TypeScript
-- Tailwind CSS
-- Vite
-- Chrome Extension Manifest V3
+- **Framework**: React 19 + TypeScript
+- **Styling**: Tailwind CSS 4
+- **Build**: Vite + @crxjs/vite-plugin
+- **Platform**: Chrome Extension Manifest V3
 
-## Contributing
+---
+
+## 🤝 Contributing
 
 欢迎提交 Issue / PR：
 
-1. Fork 仓库并创建分支
-2. 保持改动小而清晰，附带必要的验证方式（例如 build 通过）
-3. 提交 PR 并描述改动动机与影响范围
+1. Fork 仓库
+2. 创建分支（例如 `feat/export-images`）
+3. 保持改动小而清晰，并确保 `npm run build:chrome` 可通过
+4. 提交 PR 并说明改动动机与影响范围
 
-## Credits
+---
+
+## 🌟 Credits
 
 时间轴交互灵感来源：chatgpt-conversation-timeline  
 https://github.com/Reborn14/chatgpt-conversation-timeline
 
-## License
+---
 
-MIT，详见 [LICENSE](LICENSE)。
+## 📄 License
+
+MIT License © 2026
