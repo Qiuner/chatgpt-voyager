@@ -1,3 +1,8 @@
+/**
+ * @module pages/popup/index.tsx
+ * 职责：popup 页面 React 挂载入口。
+ * 主要导出：无（入口副作用初始化）。
+ */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import '@pages/popup/index.css';

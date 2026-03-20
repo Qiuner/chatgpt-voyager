@@ -1,3 +1,8 @@
+/**
+ * @module pages/content/chatgpt/style.css
+ * 职责：定义 ChatGPT 时间轴与相关 UI 样式。
+ * 主要导出：无（样式规则）。
+ */
 @import "tailwindcss/utilities";
 /*
   ChatGPT Timeline Stylesheet

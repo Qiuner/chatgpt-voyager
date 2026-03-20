@@ -1,3 +1,8 @@
+/**
+ * @module pages/content/chatgpt/timeline/types.ts
+ * 职责：定义时间轴渲染与交互使用的类型。
+ * 主要导出：Marker、TimelineUI、VisibleRange 等类型定义。
+ */
 export type Marker = {
   id: string;
   element: HTMLElement;
@@ -25,4 +30,3 @@ export type PlacementInfo = {
   placement: TooltipPlacement;
   width: number;
 };
-

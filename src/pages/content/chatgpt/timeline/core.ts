@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/timeline/core.ts
+ * 职责：提供时间轴核心常量、通用工具与观察器控制器。
+ * 主要导出：本文件导出的 selector、工具函数与 observers controller。
+ */
+/**
  * core.ts
  * 合并自以下模块：
  * - dom.ts：DOM selector 常量、waitForElement、滚动容器探测

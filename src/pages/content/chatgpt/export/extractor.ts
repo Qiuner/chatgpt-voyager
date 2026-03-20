@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/export/extractor.ts
+ * 职责：提取 ChatGPT 对话数据用于导出。
+ * 主要导出：本文件导出的提取相关函数。
+ */
+/**
  * extractor.ts
  * 从 ChatGPT 对话页 DOM 提取消息列表。
  *

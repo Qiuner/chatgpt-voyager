@@ -1,3 +1,8 @@
+/**
+ * @module assets/styles/tailwind.css
+ * 职责：定义全局 Tailwind 样式入口。
+ * 主要导出：无（样式规则）。
+ */
 @import "tailwindcss";
 
 @theme {

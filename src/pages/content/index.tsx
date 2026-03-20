@@ -1,3 +1,8 @@
+/**
+ * @module pages/content/index.tsx
+ * 职责：通用 content 页面 React 挂载入口。
+ * 主要导出：无（入口副作用初始化）。
+ */
 import { createRoot } from 'react-dom/client';
 import './style.css' 
 const div = document.createElement('div');

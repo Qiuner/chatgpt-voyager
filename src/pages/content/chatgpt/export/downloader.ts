@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/export/downloader.ts
+ * 职责：封装导出文件下载逻辑。
+ * 主要导出：本文件导出的下载相关函数。
+ */
+/**
  * downloader.ts
  * 通用下载逻辑：将字符串内容写入 Blob 并触发浏览器下载。
  *

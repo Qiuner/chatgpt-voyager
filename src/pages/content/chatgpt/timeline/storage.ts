@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/timeline/storage.ts
+ * 职责：封装时间轴本地存储读写与开关监听。
+ * 主要导出：本文件导出的 stars 与 timeline enabled 存储 API。
+ */
+/**
  * storage.ts
  * ChatGPT 时间轴的本地存储封装：stars(localStorage) 与开关(chrome.storage)。
  * Created: 2026-03-13
@@ -171,4 +176,3 @@ export const onTimelineEnabledChange = (cb: (enabled: boolean) => void): (() => 
     }
   };
 };
-

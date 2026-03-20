@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/export/formatter.ts
+ * 职责：将提取的对话数据格式化为导出文本。
+ * 主要导出：本文件导出的格式化相关函数。
+ */
+/**
  * formatter.ts
  * 基于提取到的消息生成 Markdown / JSON 导出内容。
  *

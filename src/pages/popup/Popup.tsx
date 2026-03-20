@@ -1,3 +1,8 @@
+/**
+ * @module pages/popup/Popup.tsx
+ * 职责：实现扩展 popup 主界面组件。
+ * 主要导出：Popup React 组件。
+ */
 import React from 'react';
 import logo from '@assets/img/logo.svg';
 

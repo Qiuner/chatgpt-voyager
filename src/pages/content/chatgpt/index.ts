@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/index.ts
+ * 职责：ChatGPT 页面内容脚本入口，负责时间轴与导出功能初始化。
+ * 主要导出：无（入口副作用初始化）。
+ */
+/**
  * index.ts
  * ChatGPT 时间轴 content script 入口：路由检测、初始化/销毁、幂等防重、SPA 导航监听。
  * Created: 2026-03-13
@@ -59,12 +64,17 @@ if (window.__chatgptTimelineInjected) {
       // noop
     }
     try {
-      document.querySelector(TIMELINE_LEFT_SLIDER_SELECTOR)?.remove();
+      document.querySelectorAll(TIMELINE_LEFT_SLIDER_SELECTOR).forEach((el) => el.remove());
     } catch {
       // noop
     }
     try {
       document.getElementById(TIMELINE_TOOLTIP_ID)?.remove();
+    } catch {
+      // noop
+    }
+    try {
+      document.querySelectorAll(`div[data-chatgpt-timeline-measure="1"]`).forEach((el) => el.remove());
     } catch {
       // noop
     }

@@ -1,3 +1,8 @@
+/**
+ * @module pages/popup/index.css
+ * 职责：popup 页面入口样式文件。
+ * 主要导出：无（样式规则）。
+ */
 body {
   width: 300px;
   height: 260px;

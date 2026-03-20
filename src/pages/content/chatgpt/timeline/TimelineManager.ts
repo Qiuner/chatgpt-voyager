@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/timeline/TimelineManager.ts
+ * 职责：管理时间轴生命周期、状态同步与事件绑定。
+ * 主要导出：TimelineManager 类。
+ */
+/**
  * TimelineManager.ts
  * ChatGPT 时间轴编排层：维护状态并接线 rendering/interaction/core 三个模块。
  * Created: 2026-03-13

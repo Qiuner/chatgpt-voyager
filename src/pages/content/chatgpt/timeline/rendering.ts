@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/timeline/rendering.ts
+ * 职责：负责时间轴 UI 注入、清理与 marker 渲染计算。
+ * 主要导出：本文件导出的 UI 创建/销毁与 marker 渲染函数。
+ */
+/**
  * rendering.ts
  * 合并自以下模块：
  * - ui/*：时间轴 DOM 注入/复用与移除

@@ -1,4 +1,9 @@
 /**
+ * @module pages/content/chatgpt/timeline/interaction.ts
+ * 职责：实现时间轴滚动、滑条、星标和 tooltip 交互控制。
+ * 主要导出：本文件导出的各类交互 controller 工厂函数。
+ */
+/**
  * interaction.ts
  * 合并自以下模块：
  * - scroll/*：滚动同步与 active 计算
@@ -719,4 +724,3 @@ export const createTooltipController = (params: {
 
   return { show, hide, refresh, repositionIfVisible, setHideDelay, destroy };
 };
-
